@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { userInfo } from 'os';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { User } from '../models/user';
 

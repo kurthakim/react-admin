@@ -10,6 +10,7 @@ import {
   TableFooter,
   TableHead,
   TableRow,
+  ToggleButtonGroup,
 } from '@mui/material';
 import TablePagination from '@mui/material/TablePagination';
 
@@ -66,13 +67,22 @@ const Products = () => {
                   <TableCell>{product.description}</TableCell>
                   <TableCell>{product.price}</TableCell>
                   <TableCell>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => del(product.id)}
-                    >
-                      Delete
-                    </Button>
+                    <ToggleButtonGroup>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        href={`/products/${product.id}/edit`}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => del(product.id)}
+                      >
+                        Delete
+                      </Button>
+                    </ToggleButtonGroup>
                   </TableCell>
                 </TableRow>
               );
