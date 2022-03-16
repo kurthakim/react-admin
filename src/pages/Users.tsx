@@ -1,3 +1,14 @@
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableRow,
+} from '@mui/material';
+import TablePagination from '@mui/material/TablePagination';
+
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
@@ -7,6 +18,8 @@ import { User } from '../models/user';
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [page, setPage] = useState(0);
+  const perPage = 10;
 
   useEffect(() => {
     (async () => {
@@ -17,30 +30,47 @@ const Users = () => {
 
   return (
     <Layout>
-      <table className="table table-striped table-sm">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => {
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>#</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.slice(page * perPage, (page + 1) * perPage).map((user) => {
             return (
-              <tr>
-                <td>{user.id}</td>
-                <td>
+              <TableRow key={user.id}>
+                <TableCell>{user.id}</TableCell>
+                <TableCell>
                   {user.first_name} {user.last_name}
-                </td>
-                <td>{user.email}</td>
-                <td></td>
-              </tr>
+                </TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    href={`users/${user.id}/links`}
+                  >
+                    View
+                  </Button>
+                </TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+        <TableFooter>
+          <TablePagination
+            count={users.length}
+            page={page}
+            onPageChange={(c, newPage) => setPage(newPage)}
+            rowsPerPage={perPage}
+            rowsPerPageOptions={[]}
+          />
+        </TableFooter>
+      </Table>
     </Layout>
   );
 };
