@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { User } from '../models/user';
 
@@ -25,4 +26,8 @@ const Nav = (props: { user: User | null }) => {
   );
 };
 
-export default Nav;
+const mapStateToProps = (state: { user: User }) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Nav);
